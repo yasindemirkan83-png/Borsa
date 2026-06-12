@@ -81,11 +81,11 @@ Uygulama artık açılışta **Yahoo Finance**'in gayri resmi `v7/finance/quote`
 ### Yöntem 2 — GitHub Actions (otomatik, telefonsuz/Studio'suz)
 
 1. Bu klasörü kendi GitHub reponun içine yükle (repo adı örn. `BIST-Screener`).
-2. `gradlew` dosyası yoksa, repoyu bir kere Android Studio ile açıp commit/push et — bu işlem Gradle wrapper dosyalarını (`gradlew`, `gradlew.bat`, `gradle-wrapper.jar`) otomatik oluşturur. (Bu repoda `gradle-wrapper.properties` zaten var, sadece `.jar` ve script dosyaları eksik.)
-3. `main` branşına push yaptığında `.github/workflows/build.yml` otomatik çalışır ve `Actions` sekmesinde **bist-screener-debug-apk** adlı bir artifact (APK) üretir.
-4. Actions sekmesinden artifact'i indir, telefonuna kur (Bilinmeyen kaynaklardan yükleme izni gerekir).
+2. `main` branşına push yaptığında `.github/workflows/build.yml` otomatik çalışır. Workflow, `gradlew` dosyası repoda yoksa önce onu kendisi oluşturur (`gradle wrapper`), sonra `./gradlew assembleDebug` ile APK'yı derler.
+3. `Actions` sekmesinde **bist-screener-debug-apk** adlı bir artifact (APK) oluşur.
+4. Artifact'i indir, telefonuna kur (Bilinmeyen kaynaklardan yükleme izni gerekir).
 
-> Not: GitHub Actions workflow'unun çalışması için Gradle wrapper dosyalarının repoda bulunması gerekir. Android Studio ile bir kez açıp push etmek bunu otomatik tamamlar.
+> Not: İlk seferde "Re-run jobs" gerekebilir; bazı runner'larda `gradle wrapper` adımı sonrası ilk derleme biraz daha uzun sürer (Gradle indirme).
 
 ## Sonraki Adımlar (Geliştirme Önerileri)
 
